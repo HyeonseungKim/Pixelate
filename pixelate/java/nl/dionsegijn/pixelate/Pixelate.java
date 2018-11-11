@@ -1,6 +1,7 @@
 package nl.dionsegijn.pixelate;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
@@ -17,16 +18,16 @@ public class Pixelate implements OnPixelateListener {
     private ImageView targetImageView;
     private boolean loadIntoImageView = true;
 
-    public Pixelate(@NonNull Bitmap bitmap) {
+    public Pixelate(@NonNull Bitmap bitmap, final ImageView imageView) {
         pixelateThread = new PixelateThread();
+        this.targetImageView = imageView;
         setBitmap(bitmap);
     }
 
     public Pixelate(@NonNull final ImageView imageView) {
         pixelateThread = new PixelateThread();
         this.targetImageView = imageView;
-        imageView.setDrawingCacheEnabled(true);
-        setBitmap(imageView.getDrawingCache());
+        setBitmap(((BitmapDrawable)imageView.getDrawable()).getBitmap());
     }
 
     public Pixelate setShouldHandleImageView(boolean loadIntoImageView) {
